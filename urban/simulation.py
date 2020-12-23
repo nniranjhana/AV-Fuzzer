@@ -13,17 +13,16 @@ from datetime import datetime
 import util
 import copy
 
-     
 class LgApSimulation:
 
     def __init__(self):
         ################################################################
         self.totalSimTime = 15
-        self.bridgeLogPath = "/home/av-input/Workplace/apollo-lg/apollo-3.5/data/log/cyber_bridge.INFO"
+        self.bridgeLogPath = "/home/lipc0/apollo/data/log/cyber_bridge.INFO"
         ################################################################
         self.sim = None 
         self.ego = None # There is only one ego
-        self.initEvPos = lgsvl.Vector(190, 10, 4.1)
+        self.initEvPos = lgsvl.Vector(170, 12, 4.5)
         self.npcList = [] # The list contains all the npc added
         self.initSimulator()
         self.loadMap()
@@ -38,7 +37,7 @@ class LgApSimulation:
         sim = lgsvl.Simulator(os.environ.get("SIMULATOR_HOST", "127.0.0.1"), 8181) 
         self.sim = sim
 
-    def loadMap(self, mapName="SanFrancisco"):
+    def loadMap(self, mapName="BorregasAve"):
         sim = self.sim
         if sim.current_scene == mapName:
            sim.reset()
@@ -49,7 +48,7 @@ class LgApSimulation:
         sim = self.sim
         egoState = lgsvl.AgentState()
         egoState.transform = sim.map_point_on_lane(self.initEvPos)
-        ego = sim.add_agent("XE_Rigged-apollo_3_5", lgsvl.AgentType.EGO, egoState)
+        ego = sim.add_agent("Lincoln2017MKZ (Apollo 5.0)", lgsvl.AgentType.EGO, egoState)
         sensors = ego.get_sensors()
         for s in sensors:
             if s.name in ['velodyne', 'Main Camera', 'Telephoto Camera', 'GPS', 'IMU']:
@@ -176,12 +175,12 @@ class LgApSimulation:
 
         # Add NPCs: Hard code for now, the number of npc need to be consistent.
         ################################################################
-        self.addNpcVehicle(lgsvl.Vector(170, 10, 8.1), "Sedan")
-        self.addNpcVehicle(lgsvl.Vector(155, 10, 4.1),"SUV")
-        self.addFixedMovingNpc(lgsvl.Vector(5, 10, -4), "Sedan")
-        self.addFixedMovingNpc(lgsvl.Vector(25, 15, 0), "SUV")
-        self.addFixedMovingNpc(lgsvl.Vector(35, 20, 0), "SUV")
-        self.addFixedMovingNpc(lgsvl.Vector(45, 30, 0), "Jeep")
+        # self.addNpcVehicle(lgsvl.Vector(170, 10, 8.1), "Sedan")
+        self.addNpcVehicle(lgsvl.Vector(165, 15, 5),"SUV")
+        # self.addFixedMovingNpc(lgsvl.Vector(5, 10, -4), "Sedan")
+        # self.addFixedMovingNpc(lgsvl.Vector(25, 15, 0), "SUV")
+        # self.addFixedMovingNpc(lgsvl.Vector(35, 20, 0), "SUV")
+        # self.addFixedMovingNpc(lgsvl.Vector(45, 30, 0), "Jeep")
         ################################################################
 
         for npc in npcList:
@@ -202,7 +201,7 @@ class LgApSimulation:
 
             apollo = agent1
             npcVehicle = agent2
-            if agent2.name == "XE_Rigged-apollo_3_5":
+            if agent2.name == "Lincoln2017MKZ (Apollo 5.0)":
             	apollo = agent2
             	npcVehicle = agent1
             util.print_debug(" --- On Collision, ego speed: " + str(apollo.state.speed) + ", NPC speed: " + str(npcVehicle.state.speed))
@@ -285,7 +284,7 @@ class LgApSimulation:
                     util.print_debug(" ---- Bridge is cut off ----")
                     return resultDic
 
-                sim.run(0.25)
+                sim.run(0.5) # Read twice a second
 
             ####################################    
             k = 0 # kth npc

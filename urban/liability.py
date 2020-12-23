@@ -27,12 +27,13 @@ def isHitEdge(ego, sim, init_degree):
 	mp_z = lane_center.position.z
 	mp_point = Point3D(mp_x, mp_y, mp_z)
 
-	# x1, y1, z1 = 160.809997558594, 10.1931667327881, 8.11004638671875
-	# x_e_1, y_e_1, z_e_1 = 101.646751403809, 10.1278858184814, 8.18318462371826
-	# x6, y6, z6 = 24.9999961853027, 10.1931667327881, -3.77267646789551
-	# x_e_6, y_e_6, z_e_6 = 84.163330078125, 10.1277523040771, -3.77213048934937
-	# l1 = Line3D(Point3D(x1, y1, z1), Point3D(x_e_1, y_e_1, z_e_1))
-	# l6 = Line3D(Point3D(x6, y6, z6), Point3D(x_e_6, y_e_6, z_e_6))
+	# We do not know the correct values for Borregas Ave map and Lincoln2017MKZ (Apollo 5.0) vehicle
+	x1, y1, z1 = 160.809997558594, 10.1931667327881, 8.11004638671875
+	x_e_1, y_e_1, z_e_1 = 101.646751403809, 10.1278858184814, 8.18318462371826
+	x6, y6, z6 = 24.9999961853027, 10.1931667327881, -3.77267646789551
+	x_e_6, y_e_6, z_e_6 = 84.163330078125, 10.1277523040771, -3.77213048934937
+	l1 = Line3D(Point3D(x1, y1, z1), Point3D(x_e_1, y_e_1, z_e_1))
+	l6 = Line3D(Point3D(x6, y6, z6), Point3D(x_e_6, y_e_6, z_e_6))
 	
 	diagnal_length = pow(ego.bounding_box.size.z, 2) + pow(ego.bounding_box.size.x, 2)
 	diagnal_length = math.sqrt(diagnal_length)
@@ -65,6 +66,7 @@ def isHitYellowLine(ego, sim, init_degree):
 	mp_z = lane_center.position.z
 	mp_point = Point3D(mp_x, mp_y, mp_z)
 
+	# We do not know the correct values for Borregas Ave map and Lincoln2017MKZ (Apollo 5.0) vehicle
 	x1, y1, z1 = 145.000030517578, 10.1931667327881, 4.20298147201538
 	x_e_1, y_e_1, z_e_1 = 132.136016845703, 10.1280860900879, 4.20766830444336
 	x6, y6, z6 = 24.9999923706055, 10.1931667327881, 0.026848778128624
